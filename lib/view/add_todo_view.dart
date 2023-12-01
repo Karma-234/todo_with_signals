@@ -8,9 +8,13 @@ import 'package:todo_with_signals/widget/todo_input_field.dart';
 
 final _todoTitle = signal('');
 final _todoDescription = signal('');
+
+///  Computed is read-only and cannot be updated by _isValid.value = true
 final _isValid = computed(
   () => _todoTitle.value.isNotEmpty && _todoDescription.value.isNotEmpty,
 );
+
+///  This fuction resets the values to the default state.
 void _reset() {
   _todoDescription.value = '';
   _todoTitle.value = '';
@@ -33,16 +37,20 @@ class AddTodoView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TododInputField(
+            // The input fields are not wrapped with the [Watch] because it's not reading any value but only changing it.
+            TodoInputField(
               hint: 'Title...',
               onChanged: (v) => _todoTitle.value = v,
             ),
             12.v,
-            TododInputField(
+            TodoInputField(
               hint: 'Description...',
               onChanged: (v) => _todoDescription.value = v,
             ),
             const Spacer(),
+
+            /// Only widgets that read values from signal are wrapped with Watch. In t
+            /// this case, the button below will only enabled when _isValid.value is true.
             Watch((_) {
               return ElevatedButton(
                 onPressed: _isValid.value

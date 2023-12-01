@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TododInputField extends StatelessWidget {
-  const TododInputField({super.key, this.onChanged, this.hint = 'Hint...'});
+class TodoInputField extends StatelessWidget {
+  const TodoInputField({super.key, this.onChanged, this.hint = 'Hint...'});
   final Function(String)? onChanged;
   final String hint;
 
