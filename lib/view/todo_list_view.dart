@@ -10,6 +10,7 @@ class TodoListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ///  Computed is read-only and cannot be updated by _isEmpty.value = true;
     final isEmpty = computed(() => todoService.todos.value.isEmpty);
     return Scaffold(
       appBar: AppBar(
