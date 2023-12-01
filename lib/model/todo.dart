@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 @immutable
 class TodoModel {
-  String title;
-  String todo;
-  bool isCompleted;
+  final String title;
+  final String todo;
+  final bool isCompleted;
 
-  TodoModel(
+  const TodoModel(
       {required this.todo, this.isCompleted = false, required this.title});
 
   TodoModel copyWith({String? title, String? todo, bool? isCompleted}) =>
