@@ -13,6 +13,12 @@ class TodoListView extends StatelessWidget {
     final isEmpty = computed(() => todoService.todos.value.isEmpty);
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Todo app',
+            style: GoogleFonts.markaziText(fontSize: 24),
+          ),
+        ),
         floatingActionButton: FloatingActionButton.small(
           backgroundColor: Colors.black,
           foregroundColor: Colors.yellow,
