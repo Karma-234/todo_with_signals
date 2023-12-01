@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:signals/signals_flutter.dart';
+import 'package:todo_with_signals/model/todo.dart';
+import 'package:todo_with_signals/service/todo.dart';
 import 'package:todo_with_signals/utils/extension.dart';
 import 'package:todo_with_signals/widget/todo_input_field.dart';
 
@@ -9,6 +11,10 @@ final _todoDescription = signal('');
 final _isValid = computed(
   () => _todoTitle.value.isNotEmpty && _todoDescription.value.isNotEmpty,
 );
+void _reset() {
+  _todoDescription.value = '';
+  _todoTitle.value = '';
+}
 
 class AddTodoView extends StatelessWidget {
   const AddTodoView({super.key});
@@ -23,6 +29,7 @@ class AddTodoView extends StatelessWidget {
         ),
       ),
       body: SafeArea(
+        minimum: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -38,7 +45,16 @@ class AddTodoView extends StatelessWidget {
             const Spacer(),
             Watch((_) {
               return ElevatedButton(
-                onPressed: _isValid.value ? () {} : null,
+                onPressed: _isValid.value
+                    ? () {
+                        final newTodo = TodoModel(
+                            todo: _todoDescription.value,
+                            title: _todoTitle.value);
+                        todoService.addTodo(newTodo);
+                        _reset();
+                        Navigator.of(context).pop();
+                      }
+                    : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   disabledBackgroundColor: Colors.black12,
@@ -50,7 +66,8 @@ class AddTodoView extends StatelessWidget {
                 ),
                 child: Text(
                   'Continue',
-                  style: GoogleFonts.markaziText(color: Colors.yellow),
+                  style: GoogleFonts.markaziText(
+                      color: Colors.yellow, fontSize: 22),
                 ),
               );
             }),

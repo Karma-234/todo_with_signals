@@ -12,9 +12,7 @@ class TodoService {
   }
 
   void deleteTodo(TodoModel model) {
-    final templList = todos.value;
-    templList.remove(model);
-    todos.value = templList;
+    todos.value = todos.value.where((e) => e != model).toList();
   }
 
   void markAsCompleted(TodoModel model) {

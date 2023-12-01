@@ -11,47 +11,50 @@ class TodoListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isEmpty = computed(() => todoService.todos.value.isEmpty);
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Todo app',
-            style: GoogleFonts.markaziText(fontSize: 24),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Todo app',
+          style: GoogleFonts.markaziText(fontSize: 24),
         ),
-        floatingActionButton: FloatingActionButton.small(
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.yellow,
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const AddTodoView(),
-            ));
-          },
-          child: const Icon(Icons.add),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Watch(
-            (_) => isEmpty.value
-                ? Center(
-                    child: Text(
-                      'You have no todos.',
-                      style: GoogleFonts.markaziText(fontSize: 28),
-                    ),
-                  )
-                : CustomScrollView(
-                    slivers: [
-                      SliverList.builder(
-                        itemCount: todoService.todos.value.length,
-                        itemBuilder: (context, i) => Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child:
-                              TodoCard(todoModel: todoService.todos.value[i]),
+      ),
+      floatingActionButton: FloatingActionButton.small(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.yellow,
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const AddTodoView(),
+          ));
+        },
+        child: const Icon(Icons.add),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Watch(
+          (_) => isEmpty.value
+              ? Center(
+                  child: Text(
+                    'You have no todos.',
+                    style: GoogleFonts.markaziText(fontSize: 28),
+                  ),
+                )
+              : CustomScrollView(
+                  slivers: [
+                    SliverList.builder(
+                      itemCount: todoService.todos.value.length,
+                      itemBuilder: (context, i) => Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: TodoCard(
+                          todoModel: todoService.todos.value[i],
+                          onComplete: () => todoService
+                              .markAsCompleted(todoService.todos.value[i]),
+                          onDelete: () => todoService
+                              .deleteTodo(todoService.todos.value[i]),
                         ),
                       ),
-                    ],
-                  ),
-          ),
+                    ),
+                  ],
+                ),
         ),
       ),
     );
