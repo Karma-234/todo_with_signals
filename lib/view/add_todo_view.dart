@@ -49,7 +49,7 @@ class AddTodoView extends StatelessWidget {
             ),
             const Spacer(),
 
-            /// Only widgets that read values from signal are wrapped with Watch. In t
+            /// Only widgets that read values from signal are wrapped with [Watch]. In t
             /// this case, the button below will only enabled when _isValid.value is true.
             Watch((_) {
               return ElevatedButton(

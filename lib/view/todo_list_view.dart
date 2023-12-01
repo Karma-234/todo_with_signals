@@ -30,6 +30,8 @@ class TodoListView extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
+
+        /// Think of [Watch] as a wrapper for only widgets that only require their state to change.
         child: Watch(
           (_) => isEmpty.value
               ? Center(
