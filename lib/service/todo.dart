@@ -1,6 +1,8 @@
 import 'package:signals/signals_flutter.dart';
 import 'package:todo_with_signals/model/todo.dart';
 
+final todoService = TodoService();
+
 class TodoService {
   final MutableSignal<List<TodoModel>> todos = <TodoModel>[].toSignal();
 
